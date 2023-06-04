@@ -3,6 +3,7 @@
 #include<dos.h> 
 #include <windows.h>
 #include <time.h>
+//코드의 처음에 필요한 헤더 파일이 포함되어 있다.
 
 #define WIN_WIDTH 70 
 
@@ -10,6 +11,7 @@
 #define T2POS 30
 #define T3POS 45
 #define DISKS 5
+//상수를 정의하여 창의 너비 및 기둥 및 디스크의 위치를 설정한다.
 
 using namespace std; 
  
@@ -23,11 +25,13 @@ int tries = 0;
 int score = 0; 
 
 void gotoxy(int x, int y){
+//gotoxy 함수를 정의하여 콘솔에서 커서의 위치를 설정한다.
 	CursorPosition.X = x;
 	CursorPosition.Y = y;
 	SetConsoleCursorPosition(console, CursorPosition);
 }
 void setcursor(bool visible, DWORD size) {
+//setcursor 함수를 정의하여 커서의 가시성과 크기를 제어한다.
 	if(size == 0)
 		size = 20;	
 	
@@ -37,9 +41,11 @@ void setcursor(bool visible, DWORD size) {
 	SetConsoleCursorInfo(console,&lpCursor);
 }
 void updateScore(){
+//updateScore 함수는 현재 점수를 업데이트하고 표시한다.
 	gotoxy(WIN_WIDTH + 7, 5);cout<<"Tries: "<<tries<<endl;
 }
 void instructions(){
+//게임 방법을 설명하는 창을 뛰운다.	
 	
 	system("cls");
 	cout<<"게임 방법";
@@ -51,6 +57,8 @@ void instructions(){
 	getch();
 }
 void drawTile(int tower, int tileNo, int y){
+//drawTile 함수는 한 개의 디스크를 기둥에 그린다.
+
 	int x;
 	if( tower == 1 ) x = T1POS;
 	else if( tower == 2 ) x = T2POS;
@@ -65,6 +73,8 @@ void drawTile(int tower, int tileNo, int y){
 	}
 }
 void drawTower(int tower){
+//drawTower 함수는 모든 디스크가 있는 기둥 전체를 그린다.
+
 	int x;
 	int y = 9;
 	
@@ -82,12 +92,15 @@ void drawTower(int tower){
 	}
 }
 int isEmpty(int towerNo){
+//isEmpty 함수는 기둥이 비어 있는지 확인한다.
+
 	for(int i=0; i<DISKS; i++)
 		if( towers[towerNo][i] != 0 )
 			return 0;
 	return 1;
 }
 int validate(int from, int to){
+//validate 함수는 게임의 규칙에 따라 이동이 유효한지 확인한다.
 	if( !isEmpty(to) ){
 		  
 		if( towers[from][towerTop[from]] < towers[to][towerTop[to]] )
@@ -98,6 +111,8 @@ int validate(int from, int to){
 	return 1;
 }
 int move(int from, int to){
+//move 함수는 유효한 경우 한 기둥에서 다른 기둥으로 이동한다.
+
 	if( isEmpty(from) ) return 0; 
 	if( validate(from, to) ){ 
 		if( towers[from][towerTop[from]] != 0 ){
@@ -110,14 +125,18 @@ int move(int from, int to){
 	}
 	return 0;
 }
-int win(){ 
+int win(){
+//win 함수는 플레이어가 게임에 승리했는지 확인한다.
+
 	for(int i=0; i<DISKS; i++)
 		if( towers[2][i] != DISKS-i )
 			return 0;
 	return 1;
 }
 
-void play(){
+void play(){ 
+//play 함수는 게임의 초기 상태를 설정하고 게임 루프를 구현한다.
+
 	int from, to;
 	for(int i=0; i<DISKS; i++)
 		towers[0][i] = DISKS-i;
@@ -179,6 +198,7 @@ void play(){
 }
 
 int main()
+//main 함수는 메인 메뉴를 표시하고 사용자 입력을 처리하여 게임을 시작하거나 게임 방법을 표시하거나 프로그램을 종료한다.
 {
 	setcursor(0,0); 
 	srand( (unsigned)time(NULL)); 
@@ -197,7 +217,7 @@ int main()
 		if( op=='1') play();
 		else if( op=='2') instructions();
 		else if( op=='3') exit(0);
-		
+		 
 	}while(1);
 	
 	return 0;
