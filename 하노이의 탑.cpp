@@ -4,7 +4,7 @@
 #include<dos.h> 
 #include <windows.h>
 #include <time.h>
-//ÄÚµåÀÇ Ã³À½¿¡ ÇÊ¿äÇÑ Çì´õ ÆÄÀÏÀÌ Æ÷ÇÔµÇ¾î ÀÖ´Ù.
+//ì½”ë“œì˜ ì²˜ìŒì— í•„ìš”í•œ í—¤ë” íŒŒì¼ì´ í¬í•¨ë˜ì–´ ìžˆë‹¤.
 
 #define WIN_WIDTH 70 
 
@@ -12,7 +12,7 @@
 #define T2POS 30
 #define T3POS 45
 #define DISKS 5
-//»ó¼ö¸¦ Á¤ÀÇÇÏ¿© Ã¢ÀÇ ³Êºñ ¹× ±âµÕ ¹× µð½ºÅ©ÀÇ À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù.
+//ìƒìˆ˜ë¥¼ ì •ì˜í•˜ì—¬ ì°½ì˜ ë„ˆë¹„ ë° ê¸°ë‘¥ ë° ë””ìŠ¤í¬ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤.
 
 using namespace std; 
  
@@ -26,13 +26,13 @@ int tries = 0;
 int score = 0; 
 
 void gotoxy(int x, int y){
-//gotoxy ÇÔ¼ö¸¦ Á¤ÀÇÇÏ¿© ÄÜ¼Ö¿¡¼­ Ä¿¼­ÀÇ À§Ä¡¸¦ ¼³Á¤ÇÑ´Ù.
+//gotoxy í•¨ìˆ˜ë¥¼ ì •ì˜í•˜ì—¬ ì½˜ì†”ì—ì„œ ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •í•œë‹¤.
 	CursorPosition.X = x;
 	CursorPosition.Y = y;
 	SetConsoleCursorPosition(console, CursorPosition);
 }
 void setcursor(bool visible, DWORD size) {
-//setcursor ÇÔ¼ö¸¦ Á¤ÀÇÇÏ¿© Ä¿¼­ÀÇ °¡½Ã¼º°ú Å©±â¸¦ Á¦¾îÇÑ´Ù.
+//setcursor í•¨ìˆ˜ë¥¼ ì •ì˜í•˜ì—¬ ì»¤ì„œì˜ ê°€ì‹œì„±ê³¼ í¬ê¸°ë¥¼ ì œì–´í•œë‹¤.
 	if(size == 0)
 		size = 20;	
 	
@@ -43,19 +43,19 @@ void setcursor(bool visible, DWORD size) {
 }
 
 void instructions(){
-//°ÔÀÓ ¹æ¹ýÀ» ¼³¸íÇÏ´Â Ã¢À» ¶Ù¿î´Ù.	
+//ê²Œìž„ ë°©ë²•ì„ ì„¤ëª…í•˜ëŠ” ì°½ì„ ë›°ìš´ë‹¤.	
 	
 	system("cls");
-	cout<<"°ÔÀÓ ¹æ¹ý";
+	cout<<"ê²Œìž„ ë°©ë²•";
 	cout<<"\n----------------";
-	cout<<"\n µð½ºÅ©¸¦ Å¸¿ö 1¿¡¼­ Å¸¿ö 3À¸·Î ÀÌµ¿. ";
-	cout<<"\n ÀÛÀº µð½ºÅ©¿¡´Â Å« µð½ºÅ©¸¦ ¹èÄ¡ÇÒ ¼ö ¾ø½À´Ï´Ù";
-	cout<<"\n Å¸¿ö ¹øÈ£´Â 1, 2, 3ÀÔ´Ï´Ù";
-	cout<<"\n\n¾Æ¹« Å°³ª ´©¸£¸é ¸Þ´º·Î µ¹¾Æ°©´Ï´Ù";
+	cout<<"\n ë””ìŠ¤í¬ë¥¼ íƒ€ì›Œ 1ì—ì„œ íƒ€ì›Œ 3ìœ¼ë¡œ ì´ë™. ";
+	cout<<"\n ìž‘ì€ ë””ìŠ¤í¬ì—ëŠ” í° ë””ìŠ¤í¬ë¥¼ ë°°ì¹˜í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤";
+	cout<<"\n íƒ€ì›Œ ë²ˆí˜¸ëŠ” 1, 2, 3ìž…ë‹ˆë‹¤";
+	cout<<"\n\nì•„ë¬´ í‚¤ë‚˜ ëˆ„ë¥´ë©´ ë©”ë‰´ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤";
 	getch();
 }
 void drawTile(int tower, int tileNo, int y){
-//drawTile ÇÔ¼ö´Â ÇÑ °³ÀÇ µð½ºÅ©¸¦ ±âµÕ¿¡ ±×¸°´Ù.
+//drawTile í•¨ìˆ˜ëŠ” í•œ ê°œì˜ ë””ìŠ¤í¬ë¥¼ ê¸°ë‘¥ì— ê·¸ë¦°ë‹¤.
 
 	int x;
 	if( tower == 1 ) x = T1POS;
@@ -66,12 +66,12 @@ void drawTile(int tower, int tileNo, int y){
 	
 	for(int j=0; j<((tileNo)*2)-1; j++){
 		gotoxy(x,y);
-		cout<<"¤±";
+		cout<<"ã…";
 		x++;
 	}
 }
 void drawTower(int tower){
-//drawTower ÇÔ¼ö´Â ¸ðµç µð½ºÅ©°¡ ÀÖ´Â ±âµÕ ÀüÃ¼¸¦ ±×¸°´Ù.
+//drawTower í•¨ìˆ˜ëŠ” ëª¨ë“  ë””ìŠ¤í¬ê°€ ìžˆëŠ” ê¸°ë‘¥ ì „ì²´ë¥¼ ê·¸ë¦°ë‹¤.
 
 	int x;
 	int y = 9;
@@ -90,7 +90,7 @@ void drawTower(int tower){
 	}
 }
 int isEmpty(int towerNo){
-//isEmpty ÇÔ¼ö´Â ±âµÕÀÌ ºñ¾î ÀÖ´ÂÁö È®ÀÎÇÑ´Ù.
+//isEmpty í•¨ìˆ˜ëŠ” ê¸°ë‘¥ì´ ë¹„ì–´ ìžˆëŠ”ì§€ í™•ì¸í•œë‹¤.
 
 	for(int i=0; i<DISKS; i++)
 		if( towers[towerNo][i] != 0 )
@@ -98,7 +98,7 @@ int isEmpty(int towerNo){
 	return 1;
 }
 int validate(int from, int to){
-//validate ÇÔ¼ö´Â °ÔÀÓÀÇ ±ÔÄ¢¿¡ µû¶ó ÀÌµ¿ÀÌ À¯È¿ÇÑÁö È®ÀÎÇÑ´Ù.
+//validate í•¨ìˆ˜ëŠ” ê²Œìž„ì˜ ê·œì¹™ì— ë”°ë¼ ì´ë™ì´ ìœ íš¨í•œì§€ í™•ì¸í•œë‹¤.
 	if( !isEmpty(to) ){
 		  
 		if( towers[from][towerTop[from]] < towers[to][towerTop[to]] )
@@ -109,7 +109,7 @@ int validate(int from, int to){
 	return 1;
 }
 int move(int from, int to){
-//move ÇÔ¼ö´Â À¯È¿ÇÑ °æ¿ì ÇÑ ±âµÕ¿¡¼­ ´Ù¸¥ ±âµÕÀ¸·Î ÀÌµ¿ÇÑ´Ù.
+//move í•¨ìˆ˜ëŠ” ìœ íš¨í•œ ê²½ìš° í•œ ê¸°ë‘¥ì—ì„œ ë‹¤ë¥¸ ê¸°ë‘¥ìœ¼ë¡œ ì´ë™í•œë‹¤.
 
 	if( isEmpty(from) ) return 0; 
 	if( validate(from, to) ){ 
@@ -124,7 +124,7 @@ int move(int from, int to){
 	return 0;
 }
 int win(){
-//win ÇÔ¼ö´Â ÇÃ·¹ÀÌ¾î°¡ °ÔÀÓ¿¡ ½Â¸®Çß´ÂÁö È®ÀÎÇÑ´Ù.
+//win í•¨ìˆ˜ëŠ” í”Œë ˆì´ì–´ê°€ ê²Œìž„ì— ìŠ¹ë¦¬í–ˆëŠ”ì§€ í™•ì¸í•œë‹¤.
 
 	for(int i=0; i<DISKS; i++)
 		if( towers[2][i] != DISKS-i )
@@ -133,7 +133,7 @@ int win(){
 }
 
 void play(){ 
-//play ÇÔ¼ö´Â °ÔÀÓÀÇ ÃÊ±â »óÅÂ¸¦ ¼³Á¤ÇÏ°í °ÔÀÓ ·çÇÁ¸¦ ±¸ÇöÇÑ´Ù.
+//play í•¨ìˆ˜ëŠ” ê²Œìž„ì˜ ì´ˆê¸° ìƒíƒœë¥¼ ì„¤ì •í•˜ê³  ê²Œìž„ ë£¨í”„ë¥¼ êµ¬í˜„í•œë‹¤.
 
 	int from, to, count=0;
 	for(int i=0; i<DISKS; i++)
@@ -147,7 +147,7 @@ void play(){
 		system("cls"); 		  
 		
 		cout<<"============================================================"<<endl;
-		cout<<"                         ÇÏ³ëÀÌÀÇ Å¾                        "<<endl;
+		cout<<"                         í•˜ë…¸ì´ì˜ íƒ‘                        "<<endl;
 		cout<<"============================================================"<<endl<<endl;
 		
 		drawTower(1);
@@ -157,8 +157,8 @@ void play(){
 		if( win() ){
 			system("cls");
 			gotoxy(10,5);cout<<"============================================================"<<endl;
-			gotoxy(10,6);cout<<"                           °ÔÀÓ Á¾·á                        "<<endl;
-		    gotoxy(10,7);cout<<"                           ½Ãµµ È½¼ö:                       "<<count<<endl;
+			gotoxy(10,6);cout<<"                           ê²Œìž„ ì¢…ë£Œ                        "<<endl;
+		        gotoxy(10,7);cout<<"                           ì‹œë„ íšŸìˆ˜:                       "<<count<<endl;
 			gotoxy(10,8);cout<<"============================================================"<<endl;
 			cout<<endl<<endl<<endl;
 			getch();
@@ -166,10 +166,10 @@ void play(){
 		}
 		
 		gotoxy(10,15);
-		cout<<"¿Å±æ µð½ºÅ© (µð½ºÅ©: 1,2,3): ";
+		cout<<"ì˜®ê¸¸ ë””ìŠ¤í¬ (ë””ìŠ¤í¬: 1,2,3): ";
 		cin>>from;
 		gotoxy(10,16);
-		cout<<"¿Å±æ À§Ä¡ (À§Ä¡: 1,2,3): ";
+		cout<<"ì˜®ê¸¸ ìœ„ì¹˜ (ìœ„ì¹˜: 1,2,3): ";
 		count= count+1;
 		cin>>to;
 		
@@ -197,7 +197,7 @@ void play(){
 }
 
 int main()
-//main ÇÔ¼ö´Â ¸ÞÀÎ ¸Þ´º¸¦ Ç¥½ÃÇÏ°í »ç¿ëÀÚ ÀÔ·ÂÀ» Ã³¸®ÇÏ¿© °ÔÀÓÀ» ½ÃÀÛÇÏ°Å³ª °ÔÀÓ ¹æ¹ýÀ» Ç¥½ÃÇÏ°Å³ª ÇÁ·Î±×·¥À» Á¾·áÇÑ´Ù.
+//main í•¨ìˆ˜ëŠ” ë©”ì¸ ë©”ë‰´ë¥¼ í‘œì‹œí•˜ê³  ì‚¬ìš©ìž ìž…ë ¥ì„ ì²˜ë¦¬í•˜ì—¬ ê²Œìž„ì„ ì‹œìž‘í•˜ê±°ë‚˜ ê²Œìž„ ë°©ë²•ì„ í‘œì‹œí•˜ê±°ë‚˜ í”„ë¡œê·¸ëž¨ì„ ì¢…ë£Œí•œë‹¤.
 {
 	setcursor(0,0); 
 	srand( (unsigned)time(NULL)); 
@@ -205,12 +205,12 @@ int main()
 	do{
 		system("cls");
 		gotoxy(10,5); cout<<" -------------------------- "; 
-		gotoxy(10,6); cout<<" |       ÇÏ³ëÀÌÀÇ Å¾      | "; 
+		gotoxy(10,6); cout<<" |       í•˜ë…¸ì´ì˜ íƒ‘      | "; 
 		gotoxy(10,7); cout<<" --------------------------";
-		gotoxy(10,9); cout<<"1. °ÔÀÓ ½ÃÀÛ";
-		gotoxy(10,10); cout<<"2. °ÔÀÓ ¹æ¹ý";	 
-		gotoxy(10,11); cout<<"3. ³ª°¡±â";
-		gotoxy(10,13); cout<<"¿É¼Ç ¼±ÅÃ: ";
+		gotoxy(10,9); cout<<"1. ê²Œìž„ ì‹œìž‘";
+		gotoxy(10,10); cout<<"2. ê²Œìž„ ë°©ë²•";	 
+		gotoxy(10,11); cout<<"3. ë‚˜ê°€ê¸°";
+		gotoxy(10,13); cout<<"ì˜µì…˜ ì„ íƒ: ";
 		char op = getche();
 		
 		if( op=='1') play();
