@@ -1,4 +1,5 @@
 #include<iostream>
+#include<stdio.h>
 #include<conio.h>
 #include<dos.h> 
 #include <windows.h>
@@ -40,10 +41,7 @@ void setcursor(bool visible, DWORD size) {
 	lpCursor.dwSize = size;
 	SetConsoleCursorInfo(console,&lpCursor);
 }
-void updateScore(){
-//updateScore 함수는 현재 점수를 업데이트하고 표시한다.
-	gotoxy(WIN_WIDTH + 7, 5);cout<<"Tries: "<<tries<<endl;
-}
+
 void instructions(){
 //게임 방법을 설명하는 창을 뛰운다.	
 	
@@ -68,7 +66,7 @@ void drawTile(int tower, int tileNo, int y){
 	
 	for(int j=0; j<((tileNo)*2)-1; j++){
 		gotoxy(x,y);
-		cout<<"±";
+		cout<<"ㅁ";
 		x++;
 	}
 }
@@ -137,7 +135,7 @@ int win(){
 void play(){ 
 //play 함수는 게임의 초기 상태를 설정하고 게임 루프를 구현한다.
 
-	int from, to;
+	int from, to, count=0;
 	for(int i=0; i<DISKS; i++)
 		towers[0][i] = DISKS-i;
 	for(int i=0; i<DISKS; i++)
@@ -158,11 +156,11 @@ void play(){
 		
 		if( win() ){
 			system("cls");
-			cout<<"============================================================"<<endl;
-			cout<<"                           게임 종료                        "<<endl;
-			cout<<"============================================================"<<endl;
+			gotoxy(10,5);cout<<"============================================================"<<endl;
+			gotoxy(10,6);cout<<"                           게임 종료                        "<<endl;
+		    gotoxy(10,7);cout<<"                           시도 횟수:                       "<<count<<endl;
+			gotoxy(10,8);cout<<"============================================================"<<endl;
 			cout<<endl<<endl<<endl;
-			cout<<"아무 키나 누르면 메뉴로 돌아갑니다.";
 			getch();
 			break;
 		}
@@ -172,11 +170,12 @@ void play(){
 		cin>>from;
 		gotoxy(10,16);
 		cout<<"옮길 위치 (위치: 1,2,3): ";
+		count= count+1;
 		cin>>to;
 		
 		if( to < 1 || to > 3 ) continue;
 		if( from < 1 || from > 3 ) continue;
-		if( from == to ) continue;
+		if( from == to )  continue;
 		
 		from--;
 		to--;
@@ -219,6 +218,8 @@ int main()
 		else if( op=='3') exit(0);
 		 
 	}while(1);
+
+
 	
 	return 0;
 }
